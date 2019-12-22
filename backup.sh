@@ -28,7 +28,7 @@ check_dir() {
     [ -d "$1" ] || return 0
 
     DATE=$(date "$DATE_FMT")
-    FDATE=$(date -d @$(stat -c %Z "$dir") "$DATE_FMT")
+    FDATE=$(date -d @$(stat -c %Y "$dir") "$DATE_FMT")
 
     [ "x${DATE}" = "x${FDATE}" ]
 }
