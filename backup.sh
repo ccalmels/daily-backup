@@ -23,14 +23,16 @@ check_dir() {
     local dir="$1"
     local DATE
     local FDATE
-    local DATE_FMT="+%d-%m-%y"
 
     [ -d "$1" ] || return 0
 
-    DATE=$(date "$DATE_FMT")
-    FDATE=$(date -d @$(stat -c %Y "$dir") "$DATE_FMT")
+    DATE=$(date "+%Y-%m-%d")
+    FDATE=$(stat -c %y "$dir")
+    FDATE=${FDATE%% *}
 
-    [ "x${DATE}" = "x${FDATE}" ]
+    echo "backup date:$FDATE system date:$DATE"
+
+    [ "${DATE}" = "${FDATE}" ]
 }
 
 rotate() {
