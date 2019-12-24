@@ -7,16 +7,16 @@ usage() {
 backup_rsync() {
     local src="$1"
     local remote="${2%%:*}:"
-    local dst="${2##*:}"
+    local dir="${2##*:}"
 
     # remove any trailing '/'
-    dst="${dst%%/}"
+    dir="${dir%%/}"
     [ "$remote" = "$2:" ] && remote=""
 
     echo "Rsyncing"
     rsync -ax -H --delete --delete-excluded \
 	  --exclude-from "$src/.backup-exclude" \
-	  --link-dest="$dst.1/" "$src/" "$remote$dst/"
+	  --link-dest="$dir.1/" "$src/" "$remote$dir/"
 }
 
 check_dir() {
