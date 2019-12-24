@@ -2,11 +2,10 @@
 
 usage() {
     local basename=${0##*/}
-    cat <<EOF
+    echo "\
 usage: $basename rsync <source_dir> <[host:]backup_dir> [<number_of_increment>]
        $basename rotate <YYYY-MM-DD> <[host:]backup_dir> [<number_of_increment>]
-       $basename rsync-only <source_dir> <[host:]backup_dir>
-EOF
+       $basename rsync-only <source_dir> <[host:]backup_dir>"
 }
 
 backup_rsync() {
