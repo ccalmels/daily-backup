@@ -66,7 +66,7 @@ case "$1" in
 	backup_rotate "$2" "$3" "$4"
 	;;
     rsync)
-	backup_rotate "$(date "+%Y-%m-%d")" "$3" "$4"
+	backup_rotate "$(mday "$2")" "$3" "$4"
 	backup_rsync "$2" "$3"
 	;;
     *)
