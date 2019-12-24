@@ -25,28 +25,18 @@ mday() {
     echo ${mtime%% *}
 }
 
-check_dir() {
-    local dir="$1"
-    local DATE
-    local FDATE
-
-    [ -d "$1" ] || return 0
-
-    DATE=$(date "+%Y-%m-%d")
-    FDATE=$(mday "$dir")
-
-    echo "backup date:$FDATE system date:$DATE"
-
-    [ "${DATE}" = "${FDATE}" ]
-}
-
 rotate() {
+    local day
     local dir=$(readlink -f "$1")
     local nb="5"
     local prev=""
     local idx
 
-    check_dir "$dir" && return
+    [ -d "$dir" ] || return
+
+    day=$(date "+%Y-%m-%d")
+
+    [ "$(mday "$dir")" = "$day" ] && return
 
     echo "Rotating backup dir"
 
