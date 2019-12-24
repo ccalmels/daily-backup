@@ -50,7 +50,7 @@ backup_rotate() {
     local dir="${2##*:}"
 
     [ "$remote" = "$2" ] && rotate "$1" "$2" || \
-	    ssh "$remote" "sh -s" < $0 rotate "$1" "$dir"
+	    ssh "$remote" "sh -s$-" < $0 rotate "$1" "$dir"
 }
 
 case "$1" in
