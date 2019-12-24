@@ -19,6 +19,12 @@ backup_rsync() {
 	  --link-dest="$dir.1/" "$src/" "$remote$dir/"
 }
 
+mday() {
+    local mtime="$(stat -c %y "$1")"
+
+    echo ${mtime%% *}
+}
+
 check_dir() {
     local dir="$1"
     local DATE
@@ -27,8 +33,7 @@ check_dir() {
     [ -d "$1" ] || return 0
 
     DATE=$(date "+%Y-%m-%d")
-    FDATE=$(stat -c %y "$dir")
-    FDATE=${FDATE%% *}
+    FDATE=$(mday "$dir")
 
     echo "backup date:$FDATE system date:$DATE"
 
