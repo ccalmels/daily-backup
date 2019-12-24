@@ -46,8 +46,11 @@ rotate() {
     echo "Rotating backup dir"
 
     for idx in $(seq -f ".%g" $nb -1 1) ""; do
-	[ "$prev" ] && mv "$dir$idx" "$dir$prev" \
-		|| rm -rf "$dir$idx"
+	if [ "$prev" ]; then
+	    mv "$dir$idx" "$dir$prev"
+	else
+	    rm -rf "$dir$idx"
+	fi
 	prev="$idx"
     done
 }
