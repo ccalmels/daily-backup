@@ -1,7 +1,12 @@
 #!/bin/sh
 
 usage() {
-    echo usage: ${0##*/}
+    local basename=${0##*/}
+    cat <<EOF
+usage: $basename rsync <source_dir> <[host:]backup_dir> [<number_of_increment>]
+       $basename rotate <YYYY-MM-DD> <[host:]backup_dir> [<number_of_increment>]
+       $basename rsync-only <source_dir> <[host:]backup_dir>
+EOF
 }
 
 backup_rsync() {
