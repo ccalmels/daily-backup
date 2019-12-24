@@ -10,21 +10,20 @@ usage: $basename rsync <source_dir> <[host:]backup_dir> [<number_of_increment>]
 
 backup_rsync() {
     local src="$1"
-    local remote="${2%%:*}:"
+    local dest="$2"
     local dir="${2##*:}"
     local exclude_file="$src/.backup-exclude"
     local exclude_options
 
     # remove any trailing '/'
     dir="${dir%%/}"
-    [ "$remote" = "$2:" ] && remote=""
 
     [ -r "$exclude_file" ] &&
 	exclude_options="--delete-excluded --exclude-from "$exclude_file""
 
     echo "Rsyncing"
     rsync -ax -H --delete $exclude_options \
-	  --link-dest="$dir.1/" "$src/" "$remote$dir/"
+	  --link-dest="$dir.1/" "$src/" "$dest/"
 }
 
 mday() {
