@@ -26,8 +26,8 @@ mday() {
 }
 
 rotate() {
-    local dir=$(readlink -f "$1")
     local day="$1"
+    local dir="$(readlink -f "$2")"
     local nb="5"
     local prev=""
     local idx
