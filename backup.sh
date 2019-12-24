@@ -28,7 +28,7 @@ mday() {
 rotate() {
     local day="$1"
     local dir="$(readlink -f "$2")"
-    local nb="5"
+    local nb=${3:-5}
     local prev=""
     local idx
 
@@ -49,8 +49,8 @@ backup_rotate() {
     local remote="${2%%:*}"
     local dir="${2##*:}"
 
-    [ "$remote" = "$2" ] && rotate "$1" "$2" || \
-	    ssh "$remote" "sh -s$-" < "$0" rotate "$1" "$dir"
+    [ "$remote" = "$2" ] && rotate "$1" "$2" "$3" || \
+	    ssh "$remote" "sh -s$-" < "$0" rotate "$1" "$dir" "$3"
 }
 
 case "$1" in
@@ -58,10 +58,10 @@ case "$1" in
 	backup_rsync "$2" "$3"
 	;;
     rotate)
-	backup_rotate "$2" "$3"
+	backup_rotate "$2" "$3" "$4"
 	;;
     rsync)
-	backup_rotate "$(date "+%Y-%m-%d")" "$3"
+	backup_rotate "$(date "+%Y-%m-%d")" "$3" "$4"
 	backup_rsync "$2" "$3"
 	;;
     *)
